@@ -1,0 +1,9 @@
+[package]
+name = "stubbornrust"
+version = "0.0.1"
+authors = ["Stefan Mandel <mandelst@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+
+[dev-dependencies]
