@@ -34,3 +34,25 @@ Write a method `start(to:u64) -> TransferIter` returning an iterator (`TransferI
 ### Solutions
 
 * [Passing mutable references to data source and target to the iterator](https://github.com/almondtools/stubbornrust/blob/master/src/transfer_items/referencing_collections.rs)
+* [Passing trait adaptors of data source and target to the iterator](https://github.com/almondtools/stubbornrust/blob/master/src/transfer_items/referencing_traits.rs)
+
+## Move Items through Graph
+
+Consider a directed acyclic graph with nodes containing items, e.g.
+
+```rust
+pub struct Node {
+  items:CollectionOfItems,    // contains items
+  successors:ListOfNodes      // contains reachable nodes
+}
+```
+
+The items may be assumed to be copyable (implement the Copy trait).
+
+Note: A Node might reach multiple nodes and multiple nodes might reach a single node
+
+### Task
+
+Write a method `trigger(&mut self)` which performs the following tasks:
+
+* it moves all items from it self to all successors

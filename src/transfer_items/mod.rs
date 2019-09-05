@@ -1,2 +1,2 @@
 pub mod referencing_collections;
-pub mod referencing_traitobjects;
+pub mod referencing_traits;
