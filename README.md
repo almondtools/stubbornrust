@@ -5,14 +5,24 @@ In this repository you can find some problems I had with development in Rust tog
 
 ## Transfer Items
 
-We start with an object that is responsible for transferring data items from one data source to a target. Each data
-item provides a timestamp, e.g.
+We start with an object that is responsible for transferring data items from one data source to a target.
+
+```rust
+pub struct Transfer {
+  from:FromType, // provides items
+  to:ToType      // accepts items
+}
+```
+
+Each data item provides a timestamp, e.g.
 
 ```rust
 struct TransferItem {
   timestamp:u64
 }
 ```
+
+The transfer source `from` can be assumed to provide transfer items in timestamp order (from low to high).
 
 ### Task
 
