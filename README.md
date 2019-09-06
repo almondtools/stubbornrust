@@ -59,4 +59,5 @@ Write a method `trigger(&mut self)` which performs the following tasks:
 
 ### Solutions
 
-* [A thread safe (?) variant using node references of type Arc<Mutex<Node>>](https://github.com/almondtools/stubbornrust/blob/master/src/move_items_in_graph/arc_mutex.rs)
+* [static variant using node references of type Rc<RefCell<Node>>](https://github.com/almondtools/stubbornrust/blob/master/src/move_items_in_graph/rc_refcell.rs)
+* [thread safe variant using node references of type Arc<Mutex<Node>>](https://github.com/almondtools/stubbornrust/blob/master/src/move_items_in_graph/arc_mutex.rs)
