@@ -56,3 +56,7 @@ Note: A Node might reach multiple nodes and multiple nodes might reach a single 
 Write a method `trigger(&mut self)` which performs the following tasks:
 
 * it moves all items from it self to all successors
+
+### Solutions
+
+* [A thread safe (?) variant using node references of type Arc<Mutex<Node>>](https://github.com/almondtools/stubbornrust/blob/master/src/move_items_in_graph/arc_mutex.rs)
