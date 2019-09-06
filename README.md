@@ -38,7 +38,7 @@ Write a method `start(to:u64) -> TransferIter` returning an iterator (`TransferI
 
 ## Move Items through Graph
 
-Consider a directed acyclic graph with nodes containing items, e.g.
+Consider a directed graph with nodes containing items, e.g.
 
 ```rust
 pub struct Node {
@@ -56,6 +56,7 @@ Note: A Node might reach multiple nodes and multiple nodes might reach a single 
 Write a method `trigger(&mut self)` which performs the following tasks:
 
 * it moves all items from it self to all successors
+* it works in cyclic and acyclic graphs
 
 ### Solutions
 

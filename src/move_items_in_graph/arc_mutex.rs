@@ -39,16 +39,16 @@ mod tests {
   use super::*;
 
   #[test]
-  fn test_move() {
+  fn test_acyclic() {
     let node_ab = Node {
       successors:vec![],
       items:vec![]
     };
+    let node_ab_ref = Arc::from(Mutex::from(node_ab));
     let node_bc = Node {
       successors:vec![],
       items:vec![]
     };
-    let node_ab_ref = Arc::from(Mutex::from(node_ab));
     let node_bc_ref = Arc::from(Mutex::from(node_bc));
     let mut node_a =  Node {
       successors:vec![node_ab_ref.clone()],
@@ -73,5 +73,48 @@ mod tests {
 
     assert_eq!(node_ab_ref.lock().unwrap().items, vec![1u64.into(), 2u64.into(), 3u64.into()]);
     assert_eq!(node_bc_ref.lock().unwrap().items, vec![3u64.into(), 4u64.into()]);
+  }
+
+  #[test]
+  fn test_cyclic() {
+    let node_ab = Node {
+      successors:vec![],
+      items:vec![]
+    };
+    let node_ab_ref = Arc::from(Mutex::from(node_ab));
+    let node_bc = Node {
+      successors:vec![],
+      items:vec![]
+    };
+    let node_bc_ref = Arc::from(Mutex::from(node_bc));
+    let node_a =  Node {
+      successors:vec![node_ab_ref.clone()],
+      items:vec![1u64.into(),2u64.into()]
+    };
+    let node_a_ref = Arc::from(Mutex::from(node_a));
+    let node_b =  Node {
+      successors:vec![node_ab_ref.clone(), node_bc_ref.clone()],
+      items:vec![3u64.into()]
+    };
+    let node_b_ref = Arc::from(Mutex::from(node_b));
+    let node_c =  Node {
+      successors:vec![node_bc_ref.clone()],
+      items:vec![4u64.into()]
+    };
+    let node_c_ref = Arc::from(Mutex::from(node_c));
+
+    node_bc_ref.lock().unwrap().successors.push(node_b_ref.clone());
+    node_ab_ref.lock().unwrap().successors.push(node_b_ref.clone());
+
+    let nodes = [node_a_ref.clone(), node_b_ref.clone(), node_c_ref.clone(), node_ab_ref.clone(), node_bc_ref.clone()];
+    for _ in 0..1 {
+      for node in nodes.iter() {
+        node.lock().unwrap().trigger();
+      }
+    }
+    assert!(node_b_ref.lock().unwrap().items.contains(&1u64.into()));
+    assert!(node_b_ref.lock().unwrap().items.contains(&2u64.into()));
+    assert!(node_b_ref.lock().unwrap().items.contains(&3u64.into()));
+    assert!(node_b_ref.lock().unwrap().items.contains(&4u64.into()));
   }
 }
