@@ -62,3 +62,15 @@ Write a method `trigger(&mut self)` which performs the following tasks:
 
 * [static variant using node references of type Rc<RefCell<Node>>](https://github.com/almondtools/stubbornrust/blob/master/src/move_items_in_graph/rc_refcell.rs)
 * [thread safe variant using node references of type Arc<Mutex<Node>>](https://github.com/almondtools/stubbornrust/blob/master/src/move_items_in_graph/arc_mutex.rs)
+
+## Non-Leaking Mutable Graphs
+
+Consider a directed strongly connected graph, i.e. there is a path from every node to each other (this implies that there is a cycle). 
+
+### Task
+
+Create a graph of strongly connected nodes and then drop it. Ensure that each graph node is dropped after the graph is dropped. 
+
+### Solutions
+
+* [a graph serving as factory for node references, where nodes only contain weak references to prevent memory leaks](https://github.com/almondtools/stubbornrust/blob/master/src/mutable_graphs/node_factory.rs)
